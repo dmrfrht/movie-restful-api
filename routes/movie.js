@@ -31,14 +31,14 @@ router.post('/', (req, res, next) => {
 
   promise
     .then((data) => {
-      res.json({ status: 200 })
+      res.json(data)
     })
     .catch(err => res.json(err))
 });
 
 /* PUT only movie */
 router.put('/:movie_id', (req, res, next) => {
-  const promise = Movie.findByIdAndUpdate(req.params.movie_id, req.body)
+  const promise = Movie.findByIdAndUpdate(req.params.movie_id, req.body, { new: true })
   promise
     .then(movie => {
       if (!movie) next({ message: 'The movie was not found.', code: 404 })
@@ -47,5 +47,19 @@ router.put('/:movie_id', (req, res, next) => {
     })
     .catch(err => res.json(err))
 })
+
+/* DELETE only movie */
+router.delete('/:movie_id', (req, res, next) => {
+  const promise = Movie.findByIdAndRemove(req.params.movie_id)
+  promise
+    .then(movie => {
+      if (!movie) next({ message: 'The movie was not found.', code: 404 })
+
+      res.json({ status: 200, remove: true })
+    })
+    .catch(err => res.json(err))
+})
+
+
 
 module.exports = router;
