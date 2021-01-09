@@ -4,9 +4,17 @@ var router = express.Router();
 // Models
 const Movie = require('../Models/Movie')
 
-/* GET movie  */
+/* GET movies  */
 router.get('/', (req, res) => {
   const promise = Movie.find({});
+  promise
+    .then(data => res.json(data))
+    .catch(err => res.json(err))
+})
+
+/* GET TOP 10 movies  */
+router.get('/top-10', (req, res) => {
+  const promise = Movie.find({}).limit(10).sort({ imdb_score: -1 });
   promise
     .then(data => res.json(data))
     .catch(err => res.json(err))
@@ -59,7 +67,5 @@ router.delete('/:movie_id', (req, res, next) => {
     })
     .catch(err => res.json(err))
 })
-
-
 
 module.exports = router;
