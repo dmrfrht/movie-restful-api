@@ -38,9 +38,7 @@ router.post('/', (req, res, next) => {
   const promise = movie.save()
 
   promise
-    .then((data) => {
-      res.json(data)
-    })
+    .then((data) => res.json(data))
     .catch(err => res.json(err))
 });
 
@@ -77,7 +75,7 @@ router.get('/between/:start_year/:end_year', (req, res) => {
    * $lte --> küçük ve eşit
    * $gt  --> büyük
    * $lt  --> küçük  
-   **/  
+   **/
   const promise = Movie.find({
     year: { "$gte": parseInt(start_year), "$lte": parseInt(end_year) }
   });
