@@ -12,6 +12,14 @@ router.get('/', (req, res) => {
     .catch(err => res.json(err))
 })
 
+/* GET only movie  */
+router.get('/:movie_id', (req, res) => {
+  const promise = Movie.findById(req.params.movie_id)
+  promise
+    .then(movie => res.json(movie))
+    .catch(err => res.json(err))
+})
+
 /* POST movie */
 router.post('/', (req, res, next) => {
   const movie = new Movie(req.body)
