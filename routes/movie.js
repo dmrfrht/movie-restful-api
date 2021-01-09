@@ -68,4 +68,23 @@ router.delete('/:movie_id', (req, res, next) => {
     .catch(err => res.json(err))
 })
 
+/* GET between dates movies  */
+router.get('/between/:start_year/:end_year', (req, res) => {
+  const { start_year, end_year } = req.params;
+
+  /** 
+   * $gte --> büyük ve eşit
+   * $lte --> küçük ve eşit
+   * $gt  --> büyük
+   * $lt  --> küçük  
+   **/  
+  const promise = Movie.find({
+    year: { "$gte": parseInt(start_year), "$lte": parseInt(end_year) }
+  });
+
+  promise
+    .then(data => res.json(data))
+    .catch(err => res.json(err))
+})
+
 module.exports = router;
