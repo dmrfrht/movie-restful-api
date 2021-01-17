@@ -73,7 +73,7 @@ router.delete('/:movie_id', (req, res, next) => {
     .then(movie => {
       if (!movie) next({ message: 'The movie was not found.', code: 404 })
 
-      res.json({ status: 200, remove: true })
+      res.json({ status: 200, remove: 1 })
     })
     .catch(err => res.json(err))
 })
